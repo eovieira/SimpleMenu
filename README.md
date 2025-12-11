@@ -1,2 +1,6 @@
 # SimpleMenu
 A simple menu application;
+
+Application designed for educational and commercial purposes.
+
+Made by Murillo Vieira de Almeida. © Vieira, 2025
