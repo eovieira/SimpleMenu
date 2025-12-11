@@ -1,5 +1,5 @@
 # SimpleMenu
-A simple menu application;
+<p style="color: red">A simple menu application;</p>
 
 Application designed for educational and commercial purposes.
 
