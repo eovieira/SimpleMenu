@@ -1,12 +1,18 @@
 from flask import Flask
+from flask_session import Session
+from routes.auth import auth_bp
+from routes.main import main_bp
 
-app = Flask(__name__)
+def create_app():
+    app = Flask(__name__)
+    app.config["SECRET_KEY"] = 'MINHACHAVEMUITOSECRETAEPERFEITA'
+    app.config["SESSION_TYPE"] = 'filesystem'
+    Session(app)
+    app.register_blueprint(auth_bp)
+    app.register_blueprint(main_bp)
+    return app
 
-@app.route('/')
-def main():
-  return '<h1>Hello World</h1>'
+app = create_app()
 
 if __name__ == "__main__":
-  app.run(debug = True,
-          port = 19132,
-          host='0.0.0.0')
+    app.run(debug=True)

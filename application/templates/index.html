@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Página Inicial{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow p-4">
+            <h3 class="mb-3">Enviar WhatsApp</h3>
+
+            <div class="mb-3">
+                <label class="form-label">Telefone (com DDI, apenas números)</label>
+                <input id="phone" type="text" class="form-control" placeholder="5511999998888">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Mensagem</label>
+                <textarea id="message" class="form-control" rows="4">Olá, envio de teste via SimpleMenu.</textarea>
+            </div>
+
+            <button class="btn btn-success" onclick="sendWhatsapp()">Enviar WhatsApp</button>
+
+            <div id="whatsappStatus" class="mt-3"></div>
+
+            <hr>
+            <p class="text-muted small mt-3">O envio será feito diretamente via API do Twilio.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+async function sendWhatsapp() {
+    const phone = document.getElementById('phone').value.trim();
+    const message = document.getElementById('message').value.trim();
+    const statusDiv = document.getElementById('whatsappStatus');
+    statusDiv.innerHTML = '';
+
+    if (!phone || !message) {
+        alert('Preencha telefone e mensagem');
+        return;
+    }
+
+    const resp = await fetch('/send_whatsapp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone, message })
+    });
+
+    const data = await resp.json();
+    if (resp.ok && data.status === 'ok') {
+        statusDiv.innerHTML = `<span class='text-success'>Mensagem enviada! SID: ${data.sid}</span>`;
+    } else {
+        statusDiv.innerHTML = `<span class='text-danger'>Erro: ${data.erro || 'Falha desconhecida'}</span>`;
+    }
+}
+</script>
+{% endblock %}

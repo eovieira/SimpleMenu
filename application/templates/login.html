@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Login / Registro{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card shadow p-4">
+            <h3 class="text-center mb-3">Acessar conta</h3>
+            <form id="loginForm" method="POST" action="/auth/login">
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input name="email" type="email" class="form-control" placeholder="Seu email" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Senha</label>
+                    <input name="senha" type="password" class="form-control" placeholder="Sua senha" required>
+                </div>
+                <button class="btn btn-primary w-100" type="submit">Entrar</button>
+                <p class="mt-3 text-center">
+                    Não tem conta?  
+                    <a href="#" onclick="mostrarRegistro(event)">Criar conta</a>
+                </p>
+            </form>
+            <form id="registerForm" method="POST" action="/auth/register" style="display: none;">
+                <div class="mb-3">
+                    <label class="form-label">Nome</label>
+                    <input name="nome" type="text" class="form-control" placeholder="Seu nome" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input name="email" type="email" class="form-control" placeholder="Seu email" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Senha</label>
+                    <input name="senha" type="password" class="form-control" placeholder="Crie uma senha" required>
+                </div>
+                <button class="btn btn-success w-100" type="submit">Registrar</button>
+                <p class="mt-3 text-center">
+                    Já tem conta?  
+                    <a href="#" onclick="mostrarLogin(event)">Entrar</a>
+                </p>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function mostrarRegistro(e) {
+    if (e) e.preventDefault();
+    document.getElementById("loginForm").style.display = "none";
+    document.getElementById("registerForm").style.display = "block";
+}
+function mostrarLogin(e) {
+    if (e) e.preventDefault();
+    document.getElementById("registerForm").style.display = "none";
+    document.getElementById("loginForm").style.display = "block";
+}
+</script>
+{% endblock %}
